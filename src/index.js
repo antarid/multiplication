@@ -9,23 +9,16 @@ module.exports = function multiply(first, second) {
       return arr;
     }
 
-    function sum(str1, str2){
-      var arr1 = convertingInArray(str1);
-      var arr2 = convertingInArray(str2);
-      
-      var bigArray = [];
-      var smallArray = [];
-
-      if(arr1.length >= arr2.length){
-        bigArray = arr1;
-        smallArray = arr2;
+    function sum(first, second){
+        
+      if(first.length >= second.length){
+        bigArray = first;
+        smallArray = second;
       }
-      
       else{
-        bigArray = arr2;
-        smallArray = arr1;
+        bigArray = second;
+        smallArray = first;
       }
-      
       for(var i = smallArray.length; i < bigArray.length; i++){
         smallArray.push(0);
       }
@@ -45,16 +38,32 @@ module.exports = function multiply(first, second) {
             result[i+1]++;
         }
     }
-    var string = "";
-    for(var i = result.length - 1; i >= 0; i--)
-      string+=result[i];
-    return string;  
-  }
-    
-    var result  = first; 
-    
-    for(var i = 0; i < Number(second) - 1; i++){
-      result = sum(result , first);
-    }
     return result;
+  }
+    var big;
+    var small;
+    var result = [0];
+    if(first.length >= second.length){
+      big = convertingInArray(first);
+      small = convertingInArray(second);
+    }
+    else{
+      big = convertingInArray(second);
+      small = convertingInArray(first);
+    }
+    for(var i = 0; i < small.length; i++){
+      var temp = [0];
+        for(var j = 0; j < small[i]; j++){
+          temp = sum(temp , big);
+        }
+        for(var j = 0; j < i; j++){
+          temp.unshift(0);
+        } 
+      result = sum(result , temp);
+    }
+
+    var string = "";
+    for(var i  = 0; i < result.length; i++)
+      string += result[result.length - i - 1];
+    return string;
   }
