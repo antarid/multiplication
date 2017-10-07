@@ -1,132 +1,60 @@
 module.exports = function multiply(first, second) {
   
-    function remeberTheOne(string, index){
-      var result;
-      if(index == -1){  // or 0 
-        return '1' + string;
+    function convertingInArray(str){
+      var arr = [];
+      var length = str.length;
+      for(var i = 0; i < length ; i++){
+        arr[i] = Number(str.charAt(length - 1 - i));
       }
-
-      while(true){
-        var number = string.charAt(index);
-        if(++number < 9){
-          result = string.substring(0 , index) + number + string.substring(index+1);
-          return result;
-        }
-        else{
-          result = string.substring(0 , index) + '0' + string.substring(index + 1);
-          remeberTheOne(result, index - 1);
-        }
-      }
+      return arr;
     }
-    
+
     function sum(str1, str2){
-      var bigString = "";
-      var smallString = "";
-      var result = "";
+      var arr1 = convertingInArray(str1);
+      var arr2 = convertingInArray(str2);
       
-      if(str1.length >= str2.length){
-        bigString = str1;
-        smallString = str2;
+      var bigArray = [];
+      var smallArray = [];
+
+      if(arr1.length >= arr2.length){
+        bigArray = arr1;
+        smallArray = arr2;
       }
+      
       else{
-        bigString = str2;
-        smallString = str1;
+        bigArray = arr2;
+        smallArray = arr1;
       }
       
-      for(var i = 0; i < smallString.length; i++){
-        var sum = Number(bigString.charAt(bigString.length - i - 1)) + Number(smallString.charAt(smallString.length - i - 1));
-
-        if(sum > 9){
-          sum-= 10;
-              if(i == 0){
-                  result = bigString.substring(0, bigString.length - i - 1) + sum;
-              }
-              else{
-                  result = bigString.substring(0, bigString.length - i - 1) + sum + bigString.substring(bigString.length - i);
-                  result = remeberTheOne(result , bigString.length - i - 1);
-              }
-        }
-
-        else  {
-
-          if(i == 0){
-              result = bigString.substring(0, bigString.length - i - 1) + sum;
-          }
-          else
-              result = bigString.substring(0, bigString.length - i - 1) + sum + bigString.substring(bigString.length - i);
-
-        }
+      for(var i = smallArray.length; i < bigArray.length; i++){
+        smallArray.push(0);
       }
-      return result;
+
+      var result = [];
+      
+      for(var i = 0; i < bigArray.length; i++){
+        result[i] = bigArray[i] + smallArray[i];
+      }
+
+      for(var i =  0; i < result.length; i++){
+        if(result[i] > 9){
+          result[i] -= 10;
+          if(i == result.length - 1)
+            result.push(1);
+          else
+            result[i+1]++;
+        }
     }
-  
-    var result = first; 
-    for(var i = 0; i < Number(second); i++){
+    var string = "";
+    for(var i = result.length - 1; i >= 0; i--)
+      string+=result[i];
+    return string;  
+  }
+    
+    var result  = first; 
+    
+    for(var i = 0; i < Number(second) - 1; i++){
       result = sum(result , first);
     }
     return result;
-  } 
-
-  function remeberTheOne(string, index){
-      var result;
-      if(index == -1){  // or 0 
-        return '1' + string;
-      }
-
-      while(true){
-        var number = string.charAt(index);
-        if(++number < 9){
-          result = string.substring(0 , index) + number + string.substring(index+1);
-          return result;
-        }
-        else{
-          result = string.substring(0 , index) + '0' + string.substring(index + 1);
-          remeberTheOne(result, index - 1);
-        }
-      }
-    }
-    
-    function sum(str1, str2){
-      var bigString = "";
-      var smallString = "";
-      var result = "";
-      
-      if(str1.length >= str2.length){
-        bigString = str1;
-        smallString = str2;
-      }
-      else{
-        bigString = str2;
-        smallString = str1;
-      }
-      
-      for(var i = 0; i < smallString.length; i++){
-        var sum = Number(bigString.charAt(bigString.length - i - 1)) + Number(smallString.charAt(smallString.length - i - 1));
-
-        if(sum > 9){
-          sum-= 10;
-              if(i == 0){
-                  result = bigString.substring(0, bigString.length - 1) + sum;
-
-              }
-              else{
-                  result = bigString.substring(0, bigString.length - i - 1) + sum + bigString.substring(bigString.length - i);
-                  
-              
-              }
-              result = remeberTheOne(result , bigString.length - i - 2);
-              
-        }
-
-        else  {
-
-          if(i == 0){
-              result = bigString.substring(0, bigString.length - i - 1) + sum;
-          }
-          else
-              result = bigString.substring(0, bigString.length - i - 1) + sum + bigString.substring(bigString.length - i);
-
-        }
-      }
-      return result;
-    }
+  }
