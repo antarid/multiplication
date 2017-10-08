@@ -65,5 +65,7 @@ module.exports = function multiply(first, second) {
     var string = "";
     for(var i  = 0; i < result.length; i++)
       string += result[result.length - i - 1];
+    if(string.charAt(0) == '0')
+      string = string.substring(1);
     return string;
   }
